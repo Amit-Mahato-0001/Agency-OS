@@ -4,7 +4,9 @@ const tenantSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true,
+        index: true
     },
     plan: {
         type: String,
@@ -16,6 +18,6 @@ const tenantSchema = new mongoose.Schema({
         maxProjects: {type: Number, default: 10},
         auditLogs: {type: Boolean, default: false}
     }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model("Tenant", tenantSchema)

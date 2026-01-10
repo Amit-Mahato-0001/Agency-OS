@@ -2,20 +2,22 @@ const createTenant = require('../services/tenant.service')
 
 const createTenantHandler = async(req, res) => {
     try {
-        //validate the data
-        if(!req.body.name){
-            return res.status(400).json({ message: "Agency name required"})
-        }
-        //tenant name from input
-        const tenantData = {
-            name: req.body.name
-        }
-        // tenant create 
-        const tenant = await createTenant(tenantData)
-        res.status(201).json(tenant)
+       const {name} = req.body
+
+       if(!name || typeof name !== 'string'){
+        return res.status(400).json({ message: 'Tenant name is required'})
+       }
+
+       const tenant = await createTenant({name})
+
+       return res.status(201).json({
+        message: 'Tenant created',
+        tenantId: tenant._id
+
+       })
 
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(400).json({ message: error.message })
     }
 }
 

@@ -1,7 +1,15 @@
 const Tenant = require('../models/tenant.model')
 
-const createTenant = (data) => {
-    return Tenant.create(data)
+const createTenant = async (data) => {
+    const existingTenant = await Tenant.findOne({ name: data.name})
+
+    if(existingTenant){
+        throw new error('Tenant already exists')
+    }
+
+    return Tenant.create({
+        name: data.name
+    })
 }
 
 module.exports = createTenant
