@@ -4,7 +4,7 @@ const createTenant = async (data) => {
     const existingTenant = await Tenant.findOne({ name: data.name})
 
     if(existingTenant){
-        throw new error('Tenant already exists')
+        throw new Error('Tenant already exists')
     }
 
     return Tenant.create({
