@@ -5,6 +5,7 @@ const router = require('./routes/auth.route')
 const authenticate = require('./middleware/auth.middleware')
 const resolveTenant = require('./middleware/tenant.middleware')
 const requireRole = require('./middleware/rbac.middleware')
+const projectRoutes = require('./routes/project.route')
 
 const app = express()
 connectDB()
@@ -36,5 +37,7 @@ app.get("/api/admin-only", requireRole(["owner", "admin"]), (req, res) => {
 app.get("/api/member-only", requireRole(["owner", "admin", "member"]), (req, res) => {
     res.json({ message: "Welcome team member"})
 })
+
+app.use("/api/projects", projectRoutes)
 
 module.exports = app
