@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Login from "./pages/Login"
 import Dashboard from './pages/Dashboard'
 import AuthLayout from './layouts/AuthLayout'
+import AppLayout from './layouts/AppLayout'
 
 const App = () => {
 
@@ -10,7 +11,7 @@ const App = () => {
     <BrowserRouter>
     <Routes>
       <Route path='/login' element={<AuthLayout><Login/></AuthLayout>}/>
-      <Route path='/' element={<Dashboard/>}/>
+      <Route path='/' element={<AppLayout><Dashboard/></AppLayout>}/>
     </Routes>
     </BrowserRouter>
   )
