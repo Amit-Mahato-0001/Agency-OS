@@ -21,7 +21,9 @@ const signupHandler = async (req, res) => {
 
         return res.status(201).json({
             message: "Signup successful",
-            token: result.token
+
+            // token: result.token //we never show the token here for safety purpose if token is shared then ultimately privacy is compromised
+            data : result
         })
 
     } catch (error) {
@@ -46,7 +48,9 @@ const loginHandler = async (req, res) => {
 
         return res.status(201).json({
             message: "Login successful",
-            token: result.token
+            // token: result.token
+            result
+
         })
 
     } catch (error) {
