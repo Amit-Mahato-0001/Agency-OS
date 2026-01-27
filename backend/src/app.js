@@ -9,9 +9,14 @@ const projectRoutes = require('./routes/project.route')
 const clientRoutes = require('./routes/client.route')
 const auditRoutes = require('./routes/audit.route')
 const dashboardRoutes = require('./routes/dashboard.route')
+const cors = require('cors')
 
 const app = express()
 connectDB()
+
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 
 app.use(express.json())
 app.use("/api/auth", router)
