@@ -23,6 +23,12 @@ export default function AppLayout({ children }) {
       </header>
 
       <main className="p-4">{children}</main>
+
+      <nav className="flex gap-4 text-sm">
+        <a href="/" className="hover:underline">Dashboard</a>
+        <a href="/projects" className="hover:underline">Projects</a>
+        <a href="/clients" className="hover:underline">Clients</a>
+      </nav>
     </div>
   );
 }
