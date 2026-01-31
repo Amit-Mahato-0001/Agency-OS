@@ -38,38 +38,51 @@ const Login = () => {
 
   return (
 
+    <div>
+
     <form 
-    onSubmit={handleSubmit}
-    className='p-4 rounded-lg shadow w-95'>
+      onSubmit={handleSubmit}
+      className='p-4 rounded-lg shadow w-95'>
 
       <h1 className='text-2xl font-bold mb-4'>Login</h1>
 
-      {error && (
+        {error && (
         <p className='text-red-500 text-sm mb-4'>{error}</p>
-      )}
+        )}
 
-      <input 
-      className='w-full border p-2 mb-4 rounded'
-      placeholder='Email'
-      value={email}
-      onChange={(e) => setEmail(e.target.value)} />
+       <input 
+       className='w-full border p-2 mb-4 rounded'
+       placeholder='Email'
+       value={email}
+       onChange={(e) => setEmail(e.target.value)} />
 
-      <input
-      className='w-full border p-2 mb-4 rounded'
-      type='password'
-      placeholder='Password'
-      value={password}
-      onChange={(e) => setPassword(e.target.value)} />
+       <input
+       className='w-full border p-2 mb-4 rounded'
+       type='password'
+       placeholder='Password'
+       value={password}
+       onChange={(e) => setPassword(e.target.value)} />
 
-      <button 
-      disabled={loading}
-      className='w-full bg-black text-white py-2 rounded disabled:opacity-50'>
+        <button 
+        disabled={loading}
+        className='w-full bg-black text-white py-2 rounded disabled:opacity-50'>
 
         {loading ? "Logging in..." : "Login"}
 
       </button>
 
     </form>
+
+    <p className='text-sm text-center mt-4'>
+      New agency?{" "}
+
+      <a href="/signup"
+      className='underline'>
+
+        Create account
+      </a>
+    </p>
+    </div>
   )
 }
 
