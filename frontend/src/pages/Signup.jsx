@@ -45,43 +45,58 @@ const Signup = () => {
     }
 
   return (
+    
+    <div>
+        <form 
+            className='p-6 rounded-lg shadow w-90'
+            onSubmit={handleSubmit}>
 
-    <form 
-    className='p-6 rounded-lg shadow w-90'
-    onSubmit={handleSubmit}>
-
-        <h1 className='text-2xl font-bold mb-4'>Signup</h1>
+            <h1 className='text-2xl font-bold mb-4'>Signup</h1>
         
-        {error && (
+            {error && (
 
-            <p className='text-red-500 text-sm mb-2'>{error}</p>
-        )}
+                <p className='text-red-500 text-sm mb-2'>{error}</p>
+            )}
 
-        <input 
-        className='w-full border p-2 mb-4 rounded'
-        placeholder='Enter agency name'
-        value={agencyName}
-        onChange={(e) => setAgencyName(e.target.value)}/>
+            <input 
+            className='w-full border p-2 mb-4 rounded'
+            placeholder='Enter agency name'
+            value={agencyName}
+            onChange={(e) => setAgencyName(e.target.value)}/>
 
-        <input 
-        className='w-full border p-2 mb-4 rounded'
-        placeholder='Enter your email'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}/>
+            <input 
+            className='w-full border p-2 mb-4 rounded'
+            placeholder='Enter your email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}/>
 
-        <input 
-        className='w-full border p-2 mb-4 rounded'
-        type='password'
-        placeholder='Enter your password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}/>
+            <input 
+            className='w-full border p-2 mb-4 rounded'
+            type='password'
+            placeholder='Enter your password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}/>
 
-        <button
-        disabled={loading}
-        className='w-full bg-black text-white py-2 rounded disabled:opacity-50'>
+            <button
+            disabled={loading}
+            className='w-full bg-black text-white py-2 rounded disabled:opacity-50'>
             {loading ? "Creating..." : "Create Account"}
-        </button>
-    </form>
+            </button>
+        </form>
+        
+        <p className='text-sm text-center mt-4'>
+
+            Already have an account?{" "}
+            
+            <a href="/login"
+            className='underline'>
+                
+                Login
+            </a>
+        </p>
+
+    </div>
+
   )
 }
 
