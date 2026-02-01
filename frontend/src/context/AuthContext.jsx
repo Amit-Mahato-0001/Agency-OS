@@ -1,4 +1,5 @@
-import { createContext, use, useContext, useState} from "react";
+import { createContext, use, useContext, useEffect, useState} from "react";
+import { decodeToken } from "../utils/decodeToken";
 
 const AuthContext = createContext(null)
 
@@ -12,6 +13,20 @@ const AuthProvider = ({ children}) => {
         localStorage.getItem("token")
     )
 
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+
+        if(token){
+
+            setUser(decodeToken(token))
+
+        } else{
+
+            setUser(null)
+        }
+    }, [token])
+
     const login = (newToken) => {
         localStorage.setItem("token", newToken)
         setToken(newToken)
@@ -23,7 +38,7 @@ const AuthProvider = ({ children}) => {
     }
     
     return(
-        <AuthContext.Provider value={{token, login, logout}}>
+        <AuthContext.Provider value={{token, user, login, logout}}>
             {children}
         </AuthContext.Provider>
     )
