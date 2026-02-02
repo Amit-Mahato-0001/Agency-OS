@@ -90,7 +90,7 @@ const assignClient = async ({projectId, clientId, tenantId}) => {
     const project = await Project.findOne({
         _id: projectId,
         tenantId,
-        deleteAt: null
+        deletedAt: null
     })
 
     if(!project){

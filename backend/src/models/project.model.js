@@ -35,7 +35,7 @@ const projectSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    deleteAt: {
+    deletedAt: {
         type: Date,
         default: null
     }
