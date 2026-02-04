@@ -94,7 +94,9 @@ const Projects = () => {
 
         {/* CREATE PROJECT */}
 
-        <form onSubmit={handleCreate} className='flex gap-2 mb-6'>
+        {user?.role !== "client" && (
+
+            <form onSubmit={handleCreate} className='flex gap-2 mb-6'>
 
             <input
             className='border rounded p-2 w-64'
@@ -104,7 +106,8 @@ const Projects = () => {
 
             <button className='bg-black text-white px-4 rounded'>Create</button>
 
-        </form>
+            </form>
+        )}
 
         {/* PROJECTS LIST */}
 
