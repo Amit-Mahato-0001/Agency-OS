@@ -1,7 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Login from "./pages/Login"
-import Dashboard from './pages/Dashboard'
 import AuthLayout from './layouts/AuthLayout'
 import AppLayout from './layouts/AppLayout'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -9,6 +8,7 @@ import Projects from './pages/Projects'
 import Clients from './pages/Clients'
 import AuditLogs from './pages/AuditLogs'
 import Signup from './pages/Signup'
+import DashboardRouter from './routes/DashboardRouter'
 
 const App = () => {
 
@@ -17,7 +17,7 @@ const App = () => {
     <Routes>
       <Route path='/signup' element={<AuthLayout><Signup/></AuthLayout>}/>
       <Route path='/login' element={<AuthLayout><Login/></AuthLayout>}/>
-      <Route path='/' element={<ProtectedRoute><AppLayout><Dashboard/></AppLayout></ProtectedRoute>}/>
+      <Route path='/' element={<ProtectedRoute><AppLayout><DashboardRouter/></AppLayout></ProtectedRoute>}/>
       <Route path='/projects' element={<ProtectedRoute><AppLayout><Projects/></AppLayout></ProtectedRoute>}/>
       <Route path='/clients' element={<ProtectedRoute><AppLayout><Clients/></AppLayout></ProtectedRoute>}/>
       <Route path='/audit-logs' element={<ProtectedRoute><AppLayout><AuditLogs/></AppLayout></ProtectedRoute>}/>
