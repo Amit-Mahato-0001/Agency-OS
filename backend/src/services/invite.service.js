@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const User = require('../models/user.model')
+const { sendInviteEmail } = require('../utils/email')
 
 const inviteClient = async ({email, tenantId}) => {
 
@@ -27,6 +28,12 @@ const inviteClient = async ({email, tenantId}) => {
             status: "invited",
             inviteToken,
             inviteTokenExpires
+        })
+
+        await sendInviteEmail({
+
+            to: email,
+            inviteToken
         })
 
     } else{
