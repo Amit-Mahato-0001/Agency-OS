@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import acceptInviteApi from '../api/auth'
+import authApi from '../api/auth'
 
 export default function AcceptInvite () {
 
@@ -20,7 +20,7 @@ export default function AcceptInvite () {
 
         try {
             
-            await acceptInviteApi({ token, password})
+            await authApi.acceptInviteApi({ token, password})
 
             navigate('/login')
 
