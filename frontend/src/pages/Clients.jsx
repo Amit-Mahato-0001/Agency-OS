@@ -118,13 +118,32 @@ const Clients = () => {
 
                 <div
                 key={c._id}
-                className='p-4 rounded shadow'>
+                className='p-4 rounded shadow flex items-center justify-between'>
 
                     <span>{c.email}</span>
 
-                    <span 
-                    className='text-sm text-gray-500'>
-                        {c.status}
+                    <span className='flex items-center gap-2 text-xs font-medium'>
+                        
+                        <span
+
+                        className={`h-2 w-2 rounded-full ${
+                            c.status === "active"
+                            ? "bg-green-500 animate-pulse"
+                            : "bg-gray-500"
+                        }`}
+
+                        />
+
+                        <span
+                        className={`px-2 py-2 rounded ${
+                            c.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-gray-100 text-gray-700"
+                        }`}>
+
+                            {c.status === "active" ? "Active" : "Inactive"}
+                        </span>
+
                     </span>
 
                 </div>
