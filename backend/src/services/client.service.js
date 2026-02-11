@@ -54,4 +54,33 @@ const getClients = (tenantId) => {
     return clients
 }
 
-module.exports = { createClient, getClients }
+// ENABLE/DISABLE CLIENT 
+const toggleClientStatus = async ({ clientId, tenantId, status }) => {
+
+    if(!["active", "disabled"].includes(status)) {
+
+        throw new Error("Invalid status")
+    }
+
+    const client = await User.findOneAndUpdate(
+
+        {
+            _id: clientId,
+            tenantId,
+            role: "client"
+        },
+        {
+            status
+        },
+        { new: true }
+    )
+
+    if(!client){
+
+        throw new Error("Client not found")
+    }
+
+    return client
+}
+
+module.exports = { createClient, getClients, toggleClientStatus }
