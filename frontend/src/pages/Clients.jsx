@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { fetchClients, inviteClient as inviteClientAPI} from '../api/clients'
+import { fetchClients, inviteClient as inviteClientAPI, toogleClient as toggleClientAPI} from '../api/clients'
 
 const Clients = () => {
     
     const [clients, setClients] = useState([])
     const [loading, setLoading] = useState(true)
+    
     const [email, setEmail] = useState("")
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
@@ -67,6 +68,23 @@ const Clients = () => {
         inviteClient()
     }
 
+    const handleToggle = async (clientId, status) => {
+
+        const newStatus = status === "active" ? "disabled" : "active"
+
+        try {
+            
+            await toggleClientAPI(clientId, newStatus)
+
+            setClients((prev) => prev.map((c) => c._id === clientId ? { ...c, status: newStatus } : c))
+
+        } catch (error) {
+            
+            alert("Failed to update status")
+        }
+
+    }
+
   return (
 
     <div>
@@ -122,6 +140,8 @@ const Clients = () => {
 
                     <span>{c.email}</span>
 
+
+
                     <span className='flex items-center gap-2 text-xs font-medium'>
                         
                         <span
@@ -146,6 +166,20 @@ const Clients = () => {
 
                     </span>
 
+                    {/* TOGGLE BUTTON */}
+
+                    <button
+                    onClick={() => handleToggle(c._id, c.status)}
+                    className={`px-3 py-1 rounded text-sm text-white ${
+                        c.status === "active"
+                        ? "bg-red-500"
+                        : "bg-green-500"
+                    }`}>
+
+                        {c.status === "active" ? "Disable" : "Enable" }
+
+                    </button>
+
                 </div>
             ))}
 
@@ -159,6 +193,8 @@ const Clients = () => {
             )}
 
         </div>
+
+
     </div>
 
   )

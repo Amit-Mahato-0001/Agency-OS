@@ -9,3 +9,8 @@ export const inviteClient = (data) => {
 
     return api.post('/clients-invite/invite', data)
 }
+
+export const toogleClient = (clientId, status) => {
+
+    return api.patch(`/clients/${clientId}/status`, {status})
+}
