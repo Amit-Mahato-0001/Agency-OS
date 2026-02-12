@@ -74,17 +74,16 @@ const deleteProject = async (projectId, tenantId) => {
 //client check
 //client assign 
 
-const assignClient = async ({projectId, clientId, tenantId}) => {
+const assignClient = async ({projectId, clientIds, tenantId}) => {
 
-    if(!projectId || !clientId || !tenantId){
-        throw new Error("projectId, clientId & tenantId required")
+    if(!projectId || !clientIds || !tenantId){
+        throw new Error("projectId, clientIds & tenantId required")
     }
 
     if(
-        !mongoose.Types.ObjectId.isValid(projectId) ||
-        !mongoose.Types.ObjectId.isValid(clientId)
+        !mongoose.Types.ObjectId.isValid(projectId)
     ){
-        throw new Error("Invalid projectId or clientId");
+        throw new Error("Invalid projectId or clientIds");
     }
 
     const project = await Project.findOne({
@@ -97,21 +96,28 @@ const assignClient = async ({projectId, clientId, tenantId}) => {
         throw new Error("Project not found")
     }
 
-    const client = await User.findOne({
-        _id: clientId,
+    const validClients = await User.find({
+
+        _id: { $in: clientIds },
         tenantId,
         role: "client",
         status: "active"
     })
 
-    if(!client){
-        throw new Error("Client user not found")
+    if(!validClients.length){
+        throw new Error("No valid clients found")
     }
 
-    project.clientId = client._id
-    await project.save()
+    const validClientIds = validClients.map(c => c._id)
 
-    return project
+    //using $addToSet to prevent duplicates
+    await Project.updateOne(
+        { _id: projectId },
+        { $addToSet: { clients: { $each: validClientIds }}}
+    )
+    
+    //return updated project
+    return await Project.findById(projectId)
 
 }
 

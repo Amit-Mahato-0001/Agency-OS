@@ -25,15 +25,15 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
 
-    members: {
+    members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
+    }],
 
-    clientId: {
+    clients: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
+    }],
 
     deletedAt: {
         type: Date,

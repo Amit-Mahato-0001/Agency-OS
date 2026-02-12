@@ -7,7 +7,7 @@ const createProjectHandler = async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             members: req.body.members,
-            clientId: req.body.clientId,
+            clients: req.body.clientIds,
             tenantId: req.tenantId
         })
 
@@ -65,11 +65,11 @@ const assignClientHandler = async (req, res) => {
 
     try{
         const {projectId} = req.params
-        const {clientId} = req.body
+        const {clientIds} = req.body
 
         const project = await assignClient({
             projectId,
-            clientId,
+            clientIds,
             tenantId: req.tenantId
         })
 
