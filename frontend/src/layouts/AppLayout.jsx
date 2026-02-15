@@ -1,9 +1,11 @@
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function AppLayout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation()
 
   const handleLogout = () => {
     logout();
@@ -18,7 +20,7 @@ export default function AppLayout({ children }) {
         className="
           h-[48vh]
           w-full
-          bg-[url('/purple_magic.png')]
+          bg-[url('/7.webp')]
           bg-cover
           bg-center
           relative
@@ -28,16 +30,9 @@ export default function AppLayout({ children }) {
         <div className="max-w-6xl mx-auto px-6 pt-8 flex justify-between items-center text-white">
           <img src="/Union.png" className="max-h-20 max-w-40"/>
 
-          <nav className="flex gap-6 text-sm opacity-90">
-            <a href="/">Dashboard</a>
-            <a href="/projects">Projects</a>
-            <a href="/clients">Clients</a>
-            <a href="/audit-logs">Audit Logs</a>
-          </nav>
-
           <button
             onClick={handleLogout}
-            className="text-red-400 hover:text-red-500 font-medium"
+            className="bg-white/20 border border-white/10 text-white font-medium px-4 py-2 text-sm rounded-full transition"
           >
             Logout
           </button>
@@ -48,6 +43,42 @@ export default function AppLayout({ children }) {
       <div className="flex-1">
 
         <div className="max-w-6xl mx-auto px-6 -mt-40 relative z-10">
+
+           <div className="flex gap-3 mb-6">
+
+            {[
+              { name: "Dashboard", to: "/" },
+              { name: "Projects", to: "/projects" },
+              { name: "Clients", to: "/clients" },
+              { name: "Audit Logs", to: "/audit-logs" },
+
+            ].map((item) => {
+
+              const isActive = item.to === '/' 
+              ? location.pathname === '/'
+              : location.pathname.startsWith(item.to)
+
+              return(
+
+                <a href={item.to}
+                key={item.name}
+                className={`
+                px-4 py-2
+                text-sm
+                font-medium
+                rounded-full
+                transition
+                
+                ${
+                  isActive ? "bg-white/20 text-white border border-white/10" : "text-white hover:bg-white/20 hover:border border-white/10"
+                }`}>
+
+                  {item.name}
+                </a>
+              )
+            })}
+
+          </div>
 
           <div className="relative">
 
@@ -82,7 +113,7 @@ export default function AppLayout({ children }) {
       </div>
 
       {/* FOOTER */}
-      <footer className="bg-[#22023E] text-white">
+      <footer className="bg-[#000000] text-white">
         <div className="max-w-6xl mx-auto px-6 py-12">
 
           {/* Logo */}
