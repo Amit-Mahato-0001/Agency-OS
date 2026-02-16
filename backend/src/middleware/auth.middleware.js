@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user.model")
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if(!authHeader || !authHeader.startsWith("Bearer ")){
@@ -12,11 +13,14 @@ const authenticate = (req, res, next) => {
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user = {
-            userId: decoded.userId,
-            tenantId: decoded.tenantId,
-            role: decoded.role
+        const user = await User.findById(decoded.userId)
+
+        if(!user){
+            
+            return res.status(401).json( {message: "User not found"})
         }
+
+        req.user = user
 
         next();
     } catch (err){

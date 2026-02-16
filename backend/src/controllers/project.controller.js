@@ -27,7 +27,10 @@ const getProjectHandler = async(req, res) => {
 
     try {
         
-        const projects = await getProject(req.tenantId)
+        const projects = await getProject({
+            tenantId: req.tenantId,
+            user: req.user
+        })
 
         return res.status(200).json({
             projects

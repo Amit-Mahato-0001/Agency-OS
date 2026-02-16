@@ -24,7 +24,7 @@ const createProject = async (data) => {
 
 //GET PROJECT
 
-const getProject = async (tenantId) => {
+const getProject = async ({tenantId, user}) => {
 
     if(!tenantId){
         throw new Error("TenantId required")
@@ -34,10 +34,24 @@ const getProject = async (tenantId) => {
         throw new Error("Invalid tenantId")
     }
 
-    return Project.find({
+    const query = {
         tenantId,
         deletedAt: null
-    }).lean()//data fetch speed ke lia
+    }
+
+    //Role filtering
+
+    if(user.role === "client"){
+
+        query.clients = new mongoose.Types.ObjectId(user._id)
+    }
+
+    if(user.role === "member"){
+
+        query.members = new mongoose.Types.ObjectId(user._id)
+    }
+
+    return Project.find(query).lean()
 }
 
 //DELETE PROJECT
