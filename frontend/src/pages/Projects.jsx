@@ -3,7 +3,8 @@ import {
   fetchProjects,
   createProject,
   deleteProject,
-  assignClient
+  assignClient,
+  updateProjectStatus
 } from "../api/projects"
 import { useAuth } from "../context/AuthContext"
 import { fetchClients } from "../api/clients"
@@ -102,6 +103,22 @@ const Projects = () => {
     loadProjects()
   }
 
+  // PROJECT STATUS
+  const handleStatusChange = async (projectId, status) => {
+
+    try {
+      
+      await updateProjectStatus(projectId, status)
+
+      setProjects(prev => prev.map(p => p._id === projectId ? {...p, status } : p ))
+
+    } catch (error) {
+      
+      alert("Failed to update status")
+    }
+
+  }
+
   if (loading) return <p>Loading projects...</p>
 
   return (
@@ -181,7 +198,7 @@ const Projects = () => {
 
             )}
 
-            {/* DROPDOWN */}
+            {/* ASSIGN CLIENT DROPDOWN */}
             {openDropdown === p._id && (
               <div className="absolute mt-3 w-64 bg-white border rounded shadow p-3 z-10">
 
@@ -214,6 +231,27 @@ const Projects = () => {
                 </button>
               </div>
             )}
+
+            {/* PROJECT STATUS DPOPDOWN */}
+
+            {(
+
+              user?.role === "owner" || user?.role === "admin" || user?.role === "member"
+
+            ) && (
+
+              <select
+
+              value={p.status}
+              onChange={(e) => handleStatusChange(p._id, e.target.value)}
+              className="border rounded px-2 py-1 text-sm">
+
+                <option value="active">Active</option>
+                <option value="on-hold">On Hold</option>
+                <option value="completed">Completed</option>
+              </select>
+            )
+            }
 
           </div>
         ))}

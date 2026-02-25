@@ -22,3 +22,8 @@ export const assignClient = (projectId, clientIds) => {
 
     return api.put(`/projects/${projectId}/assign-client`, {clientIds})
 }
+
+export const updateProjectStatus = (projectId, status) => {
+
+    return api.patch(`/projects/${projectId}/status`, {status})
+}
