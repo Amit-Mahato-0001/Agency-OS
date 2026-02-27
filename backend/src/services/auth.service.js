@@ -94,14 +94,27 @@ const acceptInvite = async ({ token, password }) => {
 
     const user = await User.findOne({
 
-        inviteToken: token,
-        inviteTokenExpires: { $gt: Date.now() },
-        status: "invited"
+        inviteToken: token
     })
 
     if(!user){
 
         throw new Error("Invalid or expired invite")
+    }
+
+    if(user.inviteTokenExpires < Date.now()){
+
+        throw new Error("Invite expired")
+    }
+
+    if(user.status !== "invited"){
+
+        throw new Error("Invite already used")
+    }
+
+    if(user.status !== "invited"){
+
+        throw new Error("Invite already used")
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)

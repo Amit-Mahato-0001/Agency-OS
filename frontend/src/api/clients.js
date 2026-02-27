@@ -7,7 +7,7 @@ export const fetchClients = () => {
 
 export const inviteClient = (data) => {
 
-    return api.post('/clients-invite/invite', data)
+    return api.post('/user-invite/client', data)
 }
 
 export const deleteClient = (id) => {

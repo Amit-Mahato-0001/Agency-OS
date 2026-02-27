@@ -12,7 +12,7 @@ const signupApi = (data) => {
 
 const acceptInviteApi = (data) => {
 
-    return api.post("/clients-invite/accept-invite", data)
+    return api.post("/user-invite/accept-invite", data)
 }
 
 export default {loginApi, signupApi, acceptInviteApi}

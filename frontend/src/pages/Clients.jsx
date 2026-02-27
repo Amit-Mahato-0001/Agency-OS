@@ -51,7 +51,10 @@ const Clients = () => {
       setError("")
       setMessage("")
 
-      await inviteClientAPI({ email })
+      const tenantId = localStorage.getItem("tenantId")
+      const role = "client"
+
+      await inviteClientAPI({ email, tenantId, role })
 
       setMessage("Invite sent successfully")
       setEmail("")
