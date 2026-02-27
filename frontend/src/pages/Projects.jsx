@@ -162,12 +162,15 @@ const Projects = () => {
                     Assign Clients
                   </button>
 
-                  <button
+                  {(user.role === "owner" || user.role === "admin") && (
+                    <button
                     onClick={() => handleDelete(p._id)}
                     className="text-red-500 text-sm"
-                  >
+                    >
                     Delete
-                  </button>
+                    </button>
+                  )}
+                  
                 </div>
               )}
             </div>
