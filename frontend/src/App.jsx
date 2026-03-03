@@ -10,6 +10,7 @@ import AuditLogs from './pages/AuditLogs'
 import Signup from './pages/Signup'
 import DashboardRouter from './routes/DashboardRouter'
 import AcceptInvite from './pages/AcceptInvite'
+import Members from './pages/Members'
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
       <Route path='/' element={<ProtectedRoute><AppLayout><DashboardRouter/></AppLayout></ProtectedRoute>}/>
       <Route path='/projects' element={<ProtectedRoute><AppLayout><Projects/></AppLayout></ProtectedRoute>}/>
       <Route path='/clients' element={<ProtectedRoute allowedRoles={["owner", "admin"]}><AppLayout><Clients/></AppLayout></ProtectedRoute>}/>
+      <Route path='/members' element={<ProtectedRoute allowedRoles={["owner", "admin"]}><AppLayout><Members/></AppLayout></ProtectedRoute>}/>
       <Route path='/audit-logs' element={<ProtectedRoute allowedRoles={["owner", "admin"]}><AppLayout><AuditLogs/></AppLayout></ProtectedRoute>}/>
     </Routes>
     </BrowserRouter>

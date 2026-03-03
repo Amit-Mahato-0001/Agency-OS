@@ -16,6 +16,7 @@ export default function AppLayout({ children }) {
     { name: "Dashboard", to: "/", roles: ["owner", "admin", "member", "client"] },
     { name: "Projects", to: "/projects", roles: ["owner", "admin", "member", "client"] },
     { name: "Clients", to: "/clients", roles: ["owner", "admin"] },
+    { name: "Members", to: "/members", roles: ["owner", "admin"]},
     { name: "Audit Logs", to: "/audit-logs", roles: ["owner", "admin"] },
   ];
 
