@@ -13,6 +13,7 @@ const auditRoutes = require('./routes/audit.route')
 const dashboardRoutes = require('./routes/dashboard.route')
 const cors = require('cors')
 const inviteRoutes = require('./routes/invite.route')
+const memberRoutes = require('./routes/member.route')
 
 const app = express()
 connectDB()
@@ -56,5 +57,6 @@ app.use("/api/projects", projectRoutes)
 app.use("/api/clients", clientRoutes)
 app.use("/api/audit-logs", auditRoutes)
 app.use("/api/dashboard", dashboardRoutes)
+app.use("/api/members", memberRoutes)
 
 module.exports = app
