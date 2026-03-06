@@ -11,9 +11,12 @@ const createUser = async (data) => {
     throw new Error('Invalid tenantId')
   }
 
-  const existingUser = await User.findOne({ email: data.email })
+  const existingUser = await User.findOne({
+    email: data.email,
+    tenantId: data.tenantId
+  })
   if (existingUser) {
-    throw new Error('Email already exists')
+    throw new Error('Email already exists in this tenant')
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 12)
