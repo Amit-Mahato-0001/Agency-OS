@@ -12,7 +12,7 @@ router.post(
   auth,
   tenant,
   requireRole(["owner", "admin"]),
-  inviteUserHandler
+  inviteUserHandler("client")
 )
 
 router.post(
@@ -20,7 +20,7 @@ router.post(
   auth,
   tenant,
   requireRole(["owner", "admin"]),
-  inviteUserHandler
+  inviteUserHandler("member")
 )
 
 router.post(
@@ -28,7 +28,7 @@ router.post(
   auth,
   tenant,
   requireRole(["owner"]),
-  inviteUserHandler
+  inviteUserHandler("admin")
 );
 
 router.post("/accept-invite", acceptInviteHandler)

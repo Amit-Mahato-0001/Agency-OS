@@ -2,17 +2,30 @@ const crypto = require('crypto')
 const User = require('../models/user.model')
 const { sendInviteEmail } = require('../utils/email')
 
-const inviteUser = async ({email, tenantId, role}) => {
+const inviteUser = async ({email, tenantId, role, invitedByRole}) => {
 
-    if(!email || !tenantId || !role){
+    if(!email || !tenantId || !role || !invitedByRole){
 
-        throw new Error("Email, tenantId and role required")
+        throw new Error("Email, tenantId and role and inviter role required")
     }
 
     const allowedRoles = ["client", "member", "admin"]
 
     if(!allowedRoles.includes(role)){
         throw new Error("Invalid role")
+    }
+
+    const invitePermissions = {
+
+        owner: ["client", "member", "admin"],
+        admin: ["client", "member"]
+    }
+
+    const canInvite = invitePermissions[invitedByRole] || [] //inviter's role permissions get 
+
+    if(!canInvite.includes(role)){
+
+        throw new Error("You are not allowed to invite this role")
     }
 
     const inviteToken = crypto.randomBytes(32).toString("hex")
