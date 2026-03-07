@@ -7,6 +7,7 @@
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
 const createTenant = require('../services/tenant.service')
 const createUser = require('../services/user.service')
 const User = require('../models/user.model')
@@ -22,16 +23,52 @@ const signup = async ({agencyName, email, password}) => {
         
     }
 
-    const tenant = await createTenant({
-        name: agencyName
-    })
+    //check duplicate email
+    const existingUser = await User.findOne({ email })
 
-    const user = await createUser({
-        email,
-        password,
-        tenantId: tenant._id,
-        role: "owner"
-    })
+    if(existingUser){
+
+        throw new Error("Email already registered")
+    }
+
+    const session = await mongoose.startSession()
+    let user
+
+    try {
+
+        await session.withTransaction(async () => {
+
+            const tenant = await createTenant(
+                { name: agencyName },
+                { session }
+            )
+
+            const hashedPassword = await bcrypt.hash(password, 10)
+
+            user = await createUser(
+                {
+                    email,
+                    password: hashedPassword,
+                    tenantId: tenant._id,
+                    role: "owner"
+                },
+                { session }
+            )
+        })
+
+    } catch(error){
+
+        throw error
+
+    } finally {
+
+        await session.endSession()
+    }
+
+    if(!user){
+
+        throw new Error("Signup failed")
+    }
 
     const token = jwt.sign({
         userId: user._id,
@@ -53,6 +90,7 @@ return { token }
 const login = async ({ email, password }) => {
 
     const user = await User.findOne({email}).select("+password")
+
     if(!user){
         throw new Error("Invalid Email")
     }
@@ -105,11 +143,6 @@ const acceptInvite = async ({ token, password }) => {
     if(user.inviteTokenExpires < Date.now()){
 
         throw new Error("Invite expired")
-    }
-
-    if(user.status !== "invited"){
-
-        throw new Error("Invite already used")
     }
 
     if(user.status !== "invited"){
