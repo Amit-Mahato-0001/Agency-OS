@@ -14,6 +14,7 @@ const dashboardRoutes = require('./routes/dashboard.route')
 const cors = require('cors')
 const inviteRoutes = require('./routes/invite.route')
 const memberRoutes = require('./routes/member.route')
+const taskRoutes = require('./routes/task.route')
 
 const app = express()
 connectDB()
@@ -58,5 +59,6 @@ app.use("/api/clients", clientRoutes)
 app.use("/api/audit-logs", auditRoutes)
 app.use("/api/dashboard", dashboardRoutes)
 app.use("/api/members", memberRoutes)
+app.use("/api/tasks", taskRoutes)
 
 module.exports = app

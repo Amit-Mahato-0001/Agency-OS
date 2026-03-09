@@ -70,7 +70,7 @@ const Projects = () => {
   const handleCheckboxChange = (projectId, clientId) => {
     setSelectedClients((prev) => {
       const current = prev[projectId] || [];
-
+      
       if (current.includes(clientId)) {
         return {
           ...prev,
@@ -129,12 +129,12 @@ const Projects = () => {
       {user?.role !== "client" && (
         <form onSubmit={handleCreate} className="flex gap-2 mb-6">
           <input
-            className="border border-gray-300 rounded-full p-2 w-64 hover:border-green-500 focus:border-green-500 focus:outline-none"
+            className="border border-gray-300 rounded-full p-2 w-64 hover:border-blue-500 focus:border-blue-500 focus:outline-none"
             placeholder="New project name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button className="h-10 w-10 flex items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600 transition shadow-sm">
+          <button className="h-10 w-10 flex items-center justify-center rounded-full bg-blue-500 text-white hover:bg-blue-600 transition shadow-sm">
             <Plus size={18} />
           </button>
         </form>
@@ -153,7 +153,7 @@ const Projects = () => {
                     onClick={() =>
                       setOpenDropdown(openDropdown === p._id ? null : p._id)
                     }
-                    className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition shadow-sm text-sm"
+                    className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition shadow-sm text-sm"
                   >
                     Assign Clients
                   </button>
@@ -179,7 +179,7 @@ const Projects = () => {
               <div className="flex mt-2 flex-wrap items-center gap-2">
                 <User2
                   size={18}
-                  className="bg-green-200 text-green-600 rounded-full"
+                  className="bg-blue-200 text-blue-600 rounded-full"
                 />
 
                 {p.clients?.length > 0 ? (
@@ -224,7 +224,7 @@ const Projects = () => {
 
                 <button
                   onClick={() => handleSaveClients(p._id)}
-                  className="mt-3 w-full bg-green-500 text-white text-sm py-2 rounded-full hover:bg-green-600 transition shadow-sm"
+                  className="mt-3 w-full bg-blue-500 text-white text-sm py-2 rounded-full hover:bg-blue-600 transition shadow-sm"
                 >
                   Save
                 </button>
@@ -239,7 +239,7 @@ const Projects = () => {
               <select
                 value={p.status}
                 onChange={(e) => handleStatusChange(p._id, e.target.value)}
-                className="border border-gray-300 rounded-full px-2 py-1 text-sm text-gray-500 hover:border-green-500 focus:border-green-500 focus:outline-none"
+                className="border border-gray-300 rounded-full px-2 py-1 text-sm text-gray-500 hover:border-blue-500 focus:border-blue-500 focus:outline-none"
               >
                 <option value="active">Active</option>
                 <option value="on-hold">On Hold</option>
