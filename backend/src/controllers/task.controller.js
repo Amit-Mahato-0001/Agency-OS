@@ -1,4 +1,4 @@
-const createTask = require("../services/task.service")
+const { createTask, getTasks } = require("../services/task.service")
 
 const createTaskHandler = async (req, res) => {
 
@@ -32,4 +32,28 @@ const createTaskHandler = async (req, res) => {
     }
 }
 
-module.exports = createTaskHandler
+const getTasksHandler = async (req, res) => {
+
+    try {
+        
+        const tasks = await getTasks({
+
+            tenantId: req.tenantId,
+            user: req.user
+        })
+
+        return res.status(200).json({
+
+            tasks
+        })
+
+    } catch (error) {
+        
+        return res.status(400).json({
+
+            message: error.message
+        })
+    }
+}
+
+module.exports = {createTaskHandler, getTasksHandler}

@@ -1,4 +1,4 @@
-const { mongoose } = require('mongoose')
+const mongoose = require('mongoose')
 const Task = require('../models/task.model')
 
 const createTask = async (data) => {
@@ -28,4 +28,39 @@ const createTask = async (data) => {
     return newTask
 }
 
-module.exports = createTask
+const getTasks = async ({tenantId, assigneeId, user}) => {
+
+    if(!tenantId){
+        
+        throw new Error("TenantId required")
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(tenantId)){
+
+        throw new Error("Invalid tenantId")
+    }
+
+    const query = {
+
+        tenantId,
+        deletedAt : null
+    }
+
+    //role filtering
+
+    if(user.role === "member"){
+
+        query.assigneeId = new mongoose.Types.ObjectId(user._id)
+    }
+
+    if(assigneeId){
+
+        query.assigneeId = new mongoose.Types.ObjectId(assigneeId)
+    }
+
+    const tasks = await Task.find(query).lean()
+
+    return tasks
+}
+
+module.exports = {createTask, getTasks}
