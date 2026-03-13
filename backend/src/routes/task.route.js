@@ -1,7 +1,7 @@
 const express = require("express")
 const requireRole = require("../middleware/rbac.middleware")
 const auditLogger = require("../middleware/audit.middleware")
-const { createTaskHandler, getTasksHandler} = require("../controllers/task.controller")
+const { createTaskHandler, getTasksHandler, deleteTaskHandler} = require("../controllers/task.controller")
 
 const router = express.Router()
 
@@ -14,6 +14,12 @@ router.post('/',
 router.get('/',
     requireRole(["owner", "admin", "member"]),
     getTasksHandler
+)
+
+router.delete('/:taskId',
+    requireRole(["owner", "admin"]),
+    auditLogger("TASK_DELETED"),
+    deleteTaskHandler
 )
 
 module.exports = router

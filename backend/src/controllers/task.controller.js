@@ -1,4 +1,4 @@
-const { createTask, getTasks } = require("../services/task.service")
+const { createTask, getTasks, deleteTask } = require("../services/task.service")
 
 const createTaskHandler = async (req, res) => {
 
@@ -56,4 +56,34 @@ const getTasksHandler = async (req, res) => {
     }
 }
 
-module.exports = {createTaskHandler, getTasksHandler}
+const deleteTaskHandler = async (req, res) => {
+
+    try {
+        
+        const {taskId} = req.params
+
+        const task = await deleteTask({
+            
+            tenantId: req.tenantId,
+            taskId
+        })
+
+        return res.status(200).json({
+
+            message: "Task deletion successful",
+            task
+
+        })
+
+    } catch (error) {
+
+        console.log(error)
+        
+        return res.status(400).json({
+
+            message: error.message
+        })
+    }
+}
+
+module.exports = {createTaskHandler, getTasksHandler, deleteTaskHandler}

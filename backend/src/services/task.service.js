@@ -63,4 +63,41 @@ const getTasks = async ({tenantId, assigneeId, user}) => {
     return tasks
 }
 
-module.exports = {createTask, getTasks}
+const deleteTask = async ({tenantId, taskId}) => {
+
+    if(!tenantId || !taskId){
+
+        throw new Error("tenantId or taskId required")
+
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(taskId)){
+
+        throw new Error("invalid taskId")
+
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(tenantId)){
+
+        throw new Error("invalid tenantId")
+
+    }
+
+    const task = await Task.findOneAndUpdate(
+        {
+            _id: new mongoose.Types.ObjectId(taskId),
+            tenantId: new mongoose.Types.ObjectId(tenantId),
+            deletedAt: null
+        },
+        {deletedAt: new Date()},
+        { new: true }
+    )
+
+    if(!task){
+        throw new Error("Task not found")
+    }
+
+    return task
+}
+
+module.exports = {createTask, getTasks, deleteTask}
